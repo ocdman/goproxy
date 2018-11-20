@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net"
 
-	"github.com/phuslu/glog"
+	"github.com/ocdman/glog"
 )
 
 type Dialer struct {

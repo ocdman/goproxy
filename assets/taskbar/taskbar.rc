@@ -48,7 +48,7 @@ BEGIN
         BLOCK "000004b0"
         BEGIN
             VALUE "Comments", "\0"
-            VALUE "CompanyName", "phuslu@hotmail.com\0"
+            VALUE "CompanyName", "ocdman2@gmail.com\0"
             VALUE "FileDescription", "goproxy(taskbar)\0"
             VALUE "FileVersion", "1, 0, 0, 0\0"
             VALUE "InternalName", "taskbar\0"

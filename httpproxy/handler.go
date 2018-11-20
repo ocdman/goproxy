@@ -12,7 +12,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/phuslu/glog"
+	"github.com/ocdman/glog"
 
 	"./filters"
 	"./helpers"

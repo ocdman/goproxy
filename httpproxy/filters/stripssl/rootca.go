@@ -22,7 +22,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/phuslu/glog"
+	"github.com/ocdman/glog"
 
 	"../../helpers"
 	"../../storage"
@@ -95,8 +95,8 @@ func NewRootCA(name string, vaildFor time.Duration, certDir string, portable boo
 			KeyUsage:              x509.KeyUsageKeyEncipherment | x509.KeyUsageDigitalSignature | x509.KeyUsageCertSign,
 			ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth, x509.ExtKeyUsageClientAuth},
 			BasicConstraintsValid: true,
-			// AuthorityKeyId:        sha1.New().Sum([]byte("phuslu")),
-			// SubjectKeyId:          sha1.New().Sum([]byte("phuslu")),
+			// AuthorityKeyId:        sha1.New().Sum([]byte("ocdman")),
+			// SubjectKeyId:          sha1.New().Sum([]byte("ocdman")),
 		}
 
 		priv, err := rsa.GenerateKey(rand.Reader, rsaBits)

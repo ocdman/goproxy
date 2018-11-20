@@ -1,7 +1,7 @@
 #!/bin/bash -xe
 
-export GITHUB_USER=${GITHUB_USER:-phuslu}
-export GITHUB_EMAIL=${GITHUB_EMAIL:-phuslu@hotmail.com}
+export GITHUB_USER=${GITHUB_USER:-ocdman}
+export GITHUB_EMAIL=${GITHUB_EMAIL:-ocdman2@gmail.com}
 export GITHUB_REPO=${GITHUB_REPO:-goproxy}
 export GITHUB_CI_REPO=${GITHUB_CI_REPO:-goproxy-ci}
 export GITHUB_COMMIT_ID=${TRAVIS_COMMIT:-${COMMIT_ID:-master}}
@@ -63,7 +63,7 @@ function build_go() {
 	curl -k https://storage.googleapis.com/golang/go1.4.3.linux-amd64.tar.gz | tar xz
 	mv go goroot_bootstrap
 
-	git clone --branch master https://github.com/phuslu/go
+	git clone --branch master https://github.com/ocdman/go
 	cd go/src
 	if [ "${GOTIP_FOLLOW}" = "true" ]; then
 		git remote add -f upstream https://github.com/golang/go
@@ -91,8 +91,8 @@ function build_go() {
 function build_glog() {
 	pushd ${WORKING_DIR}
 
-	git clone https://github.com/phuslu/glog $GOPATH/src/github.com/phuslu/glog
-	cd $GOPATH/src/github.com/phuslu/glog
+	git clone https://github.com/ocdman/glog $GOPATH/src/github.com/ocdman/glog
+	cd $GOPATH/src/github.com/ocdman/glog
 	git remote add -f upstream https://github.com/golang/glog
 	git rebase upstream/master
 	go build -v
@@ -104,11 +104,11 @@ function build_glog() {
 function build_http2() {
 	pushd ${WORKING_DIR}
 
-	git clone https://github.com/phuslu/net $GOPATH/src/github.com/phuslu/net
-	cd $GOPATH/src/github.com/phuslu/net/http2
+	git clone https://github.com/ocdman/net $GOPATH/src/github.com/ocdman/net
+	cd $GOPATH/src/github.com/ocdman/net/http2
 	git remote add -f upstream https://github.com/golang/net
 	git rebase upstream/master
-	go get -x github.com/phuslu/net/http2
+	go get -x github.com/ocdman/net/http2
 	grep -q 'machine github.com' ~/.netrc && git push -f origin master
 
 	popd
@@ -131,11 +131,11 @@ function build_bogo() {
 function build_quicgo() {
 	pushd ${WORKING_DIR}
 
-	git clone https://github.com/phuslu/quic-go $GOPATH/src/github.com/phuslu/quic-go
-	cd $GOPATH/src/github.com/phuslu/quic-go
+	git clone https://github.com/ocdman/quic-go $GOPATH/src/github.com/ocdman/quic-go
+	cd $GOPATH/src/github.com/ocdman/quic-go
 	git remote add -f upstream https://github.com/lucas-clemente/quic-go
 	git rebase upstream/master
-	go get -v github.com/phuslu/quic-go/h2quic
+	go get -v github.com/ocdman/quic-go/h2quic
 	grep -q 'machine github.com' ~/.netrc && git push -f origin master
 
 	popd
@@ -263,7 +263,7 @@ function build_goproxy_gae() {
 
 	for FILE in python27.exe python27.dll python27.zip
 	do
-		curl -LOJ https://raw.githubusercontent.com/phuslu/pybuild/master/${FILE}
+		curl -LOJ https://raw.githubusercontent.com/ocdman/pybuild/master/${FILE}
 	done
 
 	echo -e '@echo off\n"%~dp0python27.exe" uploader.py || pause' >uploader.bat
@@ -283,7 +283,7 @@ function build_goproxy_vps() {
 	git reset --hard origin/server.vps
 	git clean -dfx .
 
-	git clone --branch master https://github.com/phuslu/goproxy $GOPATH/src/github.com/phuslu/goproxy
+	git clone --branch master https://github.com/ocdman/goproxy $GOPATH/src/github.com/ocdman/goproxy
 	awk 'match($1, /"((github\.com|golang\.org|gopkg\.in)\/.+)"/) {if (!seen[$1]++) {gsub("\"", "", $1); print $1}}' $(find . -name "*.go") | xargs -n1 -i go get -u -v {}
 
 	cat <<EOF |

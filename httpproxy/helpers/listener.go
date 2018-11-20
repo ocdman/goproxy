@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/phuslu/glog"
+	"github.com/ocdman/glog"
 )
 
 const (

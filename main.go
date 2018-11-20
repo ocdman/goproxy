@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/phuslu/glog"
+	"github.com/ocdman/glog"
 
 	"./httpproxy"
 	"./httpproxy/filters"

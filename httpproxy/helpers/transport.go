@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/phuslu/glog"
-	"github.com/phuslu/net/http2"
-	"github.com/phuslu/quic-go/h2quic"
+	"github.com/ocdman/glog"
+	"github.com/ocdman/net/http2"
+	"github.com/ocdman/quic-go/h2quic"
 )
 
 var (

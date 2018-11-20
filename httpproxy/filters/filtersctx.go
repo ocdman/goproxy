@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	contextKey int = 0x3f71df90 // fmt.Sprintf("%x", md5.Sum([]byte("phuslu")))[:8]
+	contextKey int = 0x3f71df90 // fmt.Sprintf("%x", md5.Sum([]byte("ocdman")))[:8]
 )
 
 type racer struct {

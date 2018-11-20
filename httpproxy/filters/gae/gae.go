@@ -17,10 +17,10 @@ import (
 
 	"github.com/cloudflare/golibs/lrucache"
 	"github.com/dsnet/compress/brotli"
-	"github.com/phuslu/glog"
-	"github.com/phuslu/net/http2"
-	quic "github.com/phuslu/quic-go"
-	"github.com/phuslu/quic-go/h2quic"
+	"github.com/ocdman/glog"
+	"github.com/ocdman/net/http2"
+	quic "github.com/ocdman/quic-go"
+	"github.com/ocdman/quic-go/h2quic"
 
 	"../../filters"
 	"../../helpers"
@@ -302,7 +302,7 @@ func NewFilter(config *Config) (filters.Filter, error) {
 			QuicConfig: &quic.Config{
 				HandshakeTimeout:              md.Timeout,
 				IdleTimeout:                   md.Timeout,
-				RequestConnectionIDTruncation: true,
+				RequestConnectionIDOmission: true,
 				KeepAlive:                     true,
 			},
 			DialAddr:              md.DialQuic,

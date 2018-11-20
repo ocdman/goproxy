@@ -12,8 +12,8 @@ import (
 	"time"
 
 	"github.com/cloudflare/golibs/lrucache"
-	"github.com/phuslu/glog"
-	quic "github.com/phuslu/quic-go"
+	"github.com/ocdman/glog"
+	quic "github.com/ocdman/quic-go"
 )
 
 type MultiDialer struct {
@@ -197,7 +197,7 @@ func (d *MultiDialer) dialMultiTLS(network string, hosts []string, port string, 
 			ctx, cancel := context.WithTimeout(context.Background(), d.Timeout)
 			defer cancel()
 
-			conn, err := net.DialTCPContext(ctx, network, nil, raddr)
+			conn, err := net.DialTCPContext(ctx, network, nil, raddr, nil)
 			if err != nil {
 				d.TLSConnDuration.Del(host)
 				d.TLSConnError.Set(host, err, time.Now().Add(d.ErrorConnExpiry))
@@ -275,7 +275,7 @@ func (d *MultiDialer) DialQuic(address string, tlsConfig *tls.Config, cfg *quic.
 		cfg = &quic.Config{
 			HandshakeTimeout:              d.Timeout,
 			IdleTimeout:                   d.Timeout,
-			RequestConnectionIDTruncation: true,
+			RequestConnectionIDOmission: true,
 			KeepAlive:                     true,
 		}
 	}
@@ -292,7 +292,7 @@ func (d *MultiDialer) DialQuic(address string, tlsConfig *tls.Config, cfg *quic.
 					config = &quic.Config{
 						HandshakeTimeout:              d.Timeout,
 						IdleTimeout:                   d.Timeout,
-						RequestConnectionIDTruncation: true,
+						RequestConnectionIDOmission: true,
 						KeepAlive:                     true,
 					}
 					isGoogleAddr = true
@@ -300,7 +300,7 @@ func (d *MultiDialer) DialQuic(address string, tlsConfig *tls.Config, cfg *quic.
 					config = &quic.Config{
 						HandshakeTimeout:              d.Timeout,
 						IdleTimeout:                   d.Timeout,
-						RequestConnectionIDTruncation: true,
+						RequestConnectionIDOmission: true,
 						KeepAlive:                     true,
 					}
 				default:

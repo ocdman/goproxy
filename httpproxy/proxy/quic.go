@@ -5,16 +5,16 @@
 package proxy
 
 import (
-	"crypto/tls"
+	// "crypto/tls"
 	"errors"
 	"net"
 	"net/http"
 	"net/url"
 	"time"
 
-	"github.com/phuslu/glog"
-	quic "github.com/phuslu/quic-go"
-	"github.com/phuslu/quic-go/h2quic"
+	"github.com/ocdman/glog"
+	quic "github.com/ocdman/quic-go"
+	"github.com/ocdman/quic-go/h2quic"
 )
 
 func QUIC(network, addr string, auth *Auth, forward Dialer, resolver Resolver) (Dialer, error) {
@@ -38,15 +38,15 @@ func QUIC(network, addr string, auth *Auth, forward Dialer, resolver Resolver) (
 			QuicConfig: &quic.Config{
 				HandshakeTimeout:              5 * time.Second,
 				IdleTimeout:                   10 * time.Second,
-				RequestConnectionIDTruncation: true,
+				RequestConnectionIDOmission: true,
 				KeepAlive:                     true,
 			},
-			KeepAliveTimeout:      30 * time.Minute,
-			IdleConnTimeout:       5 * time.Minute,
-			ResponseHeaderTimeout: 5 * time.Second,
-			DialAddr: func(address string, tlsConfig *tls.Config, cfg *quic.Config) (quic.Session, error) {
-				return quic.DialAddr(addr, tlsConfig, cfg)
-			},
+			// KeepAliveTimeout:      30 * time.Minute,
+			// IdleConnTimeout:       5 * time.Minute,
+			// ResponseHeaderTimeout: 5 * time.Second,
+			// DialAddr: func(address string, tlsConfig *tls.Config, cfg *quic.Config) (quic.Session, error) {
+			// 	return quic.DialAddr(addr, tlsConfig, cfg)
+			// },
 			GetClientKey: func(_ string) string {
 				return addr
 			},

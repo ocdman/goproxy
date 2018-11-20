@@ -13,11 +13,11 @@ import (
 	"time"
 
 	"github.com/cloudflare/golibs/lrucache"
-	"github.com/phuslu/glog"
-	"github.com/phuslu/goproxy/httpproxy/helpers"
-	"github.com/phuslu/goproxy/httpproxy/proxy"
-	"github.com/phuslu/net/http2"
-	"github.com/phuslu/quic-go/h2quic"
+	"github.com/ocdman/glog"
+	"github.com/ocdman/goproxy/httpproxy/helpers"
+	"github.com/ocdman/goproxy/httpproxy/proxy"
+	"github.com/ocdman/net/http2"
+	"github.com/ocdman/quic-go/h2quic"
 )
 
 var (
@@ -90,6 +90,7 @@ func main() {
 		Handlers:    map[string]http.Handler{},
 		ServerNames: []string{},
 	}
+
 	for _, server := range config.HTTP2 {
 		handler := &HTTP2Handler{
 			ServerNames: server.ServerName,
@@ -251,11 +252,12 @@ func main() {
 		}
 
 		switch server.ProxyAuthMethod {
-		case "pam":
+		case "pam", "htpasswd":
 			if _, err := exec.LookPath("python"); err != nil {
 				glog.Fatalf("pam: exec.LookPath(\"python\") error: %+v", err)
 			}
 			handler.SimpleAuth = &SimpleAuth{
+				Mode:      server.ProxyAuthMethod,
 				CacheSize: 2048,
 			}
 		case "builtin":

@@ -5,7 +5,7 @@
 package proxy
 
 import (
-	// "crypto/tls"
+	"crypto/tls"
 	"errors"
 	"net"
 	"net/http"
@@ -41,12 +41,12 @@ func QUIC(network, addr string, auth *Auth, forward Dialer, resolver Resolver) (
 				RequestConnectionIDOmission: true,
 				KeepAlive:                     true,
 			},
-			// KeepAliveTimeout:      30 * time.Minute,
-			// IdleConnTimeout:       5 * time.Minute,
-			// ResponseHeaderTimeout: 5 * time.Second,
-			// DialAddr: func(address string, tlsConfig *tls.Config, cfg *quic.Config) (quic.Session, error) {
-			// 	return quic.DialAddr(addr, tlsConfig, cfg)
-			// },
+			KeepAliveTimeout:      30 * time.Minute,
+			IdleConnTimeout:       5 * time.Minute,
+			ResponseHeaderTimeout: 5 * time.Second,
+			DialAddr: func(address string, tlsConfig *tls.Config, cfg *quic.Config) (quic.Session, error) {
+				return quic.DialAddr(addr, tlsConfig, cfg)
+			},
 			GetClientKey: func(_ string) string {
 				return addr
 			},

@@ -6,7 +6,9 @@ package proxy
 
 import (
 	"crypto/tls"
+	"encoding/base64"
 	"errors"
+	"fmt"
 	"net"
 	"net/http"
 	"net/url"
@@ -85,6 +87,9 @@ func (h *Quic) Dial(network, addr string) (net.Conn, error) {
 			Scheme: "https",
 			Host:   addr,
 		},
+	}
+	if h.user != "" {
+		req.Header.Set("Proxy-Authorization", fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(h.user + ":" + h.password))))
 	}
 
 	resp, err := h.transport.RoundTripOpt(req, h2quic.RoundTripOpt{OnlyCachedConn: true})

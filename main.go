@@ -97,6 +97,17 @@ func main() {
 			Transport:   transport,
 		}
 
+		if server.WebSocketPath != "" {
+			handler.WebSocketPath = server.WebSocketPath
+		}
+
+		if server.WebSocketBackend != "" {
+			handler.WebSocketBackend, err = url.Parse(server.WebSocketBackend)
+			if err != nil {
+				glog.Fatalf("url.Parse(%+v) error: %+v", server.WebSocketBackend, err)
+			}
+		}
+
 		if server.ProxyFallback != "" {
 			handler.Fallback, err = url.Parse(server.ProxyFallback)
 			if err != nil {

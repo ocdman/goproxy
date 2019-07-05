@@ -46,6 +46,9 @@ type Config struct {
 
 		ProxyAuthMethod  string
 		ProxyBuiltinAuth map[string]string
+
+		WebSocketPath string
+		WebSocketBackend string
 	}
 	TLS []struct {
 		ServerName []string

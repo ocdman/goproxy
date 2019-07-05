@@ -23,6 +23,8 @@ type HTTP2Handler struct {
 	Dial         func(network, address string) (net.Conn, error)
 	*http.Transport
 	*SimpleAuth
+	WebSocketPath string
+	WebSocketBackend *url.URL
 }
 
 func (h *HTTP2Handler) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
@@ -184,6 +186,15 @@ func (h *HTTP2Handler) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
 		}
 		if h.Fallback.Scheme == "file" {
 			http.FileServer(http.Dir(h.Fallback.Path)).ServeHTTP(rw, req)
+			return
+		}
+		if req.URL.Path == h.WebSocketPath {
+			// Reverse proxy for WebSocket connections
+			if h.WebSocketBackend == nil {
+				http.Error(rw, "403 Forbidden", http.StatusForbidden)
+				return
+			}
+			NewWebSocketReverseProxy(h.WebSocketBackend).ServeHTTP(rw, req)
 			return
 		}
 		if h.Dial != nil {

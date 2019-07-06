@@ -1,3 +1,4 @@
+// copy/paste from https://github.com/yhat/wsutil
 package main
 
 import (

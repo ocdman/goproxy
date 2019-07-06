@@ -34,16 +34,21 @@ func main() {
 		return
 	}
 
-	helpers.SetFlagsIfAbsent(map[string]string{
-		"logtostderr": "true",
-		"v":           "2",
-	})
-	flag.Parse()
-
 	config, err := NewConfig(flag.Arg(0))
 	if err != nil {
 		glog.Fatalf("NewConfig(%#v) error: %+v", flag.Arg(0), err)
 	}
+
+	loglevel := 2
+	if config.Default.LogLevel > 0 {
+		loglevel = config.Default.LogLevel
+	}
+
+	helpers.SetFlagsIfAbsent(map[string]string{
+		"logtostderr": "true",
+		"v":           fmt.Sprintf("%v", loglevel),
+	})
+	flag.Parse()
 
 	dialer := &helpers.Dialer{
 		Dialer: &net.Dialer{
